@@ -4,12 +4,13 @@ const createTuit = async (req, res) => {
     const newTuit = req.body;
     newTuit.likes = 0;
     newTuit.liked = false;
-    const insertedTuit = await tuitsDao.createTuit(newTuit);
+    const insertedTuit = await tuitsDao
+        .createTuit(newTuit);
     res.json(insertedTuit);
 }
 
 
-const findTuits =async (req, res) => {
+const findTuits = async (req, res) => {
     const tuits = await tuitsDao.findTuits()
     res.json(tuits);
 }
@@ -20,16 +21,16 @@ const updateTuit = async (req, res) => {
     const status = await tuitsDao
         .updateTuit(tuitdIdToUpdate,
             updates);
-    res.sendStatus(status);
+    res.json(status);
 }
-
 
 const deleteTuit = async (req, res) => {
     const tuitdIdToDelete = req.params.tid;
     const status = await tuitsDao
         .deleteTuit(tuitdIdToDelete);
-    res.sendStatus(status);
+    res.json(status);
 }
+
 
 export default (app) => {
     app.post('/api/tuits', createTuit);
